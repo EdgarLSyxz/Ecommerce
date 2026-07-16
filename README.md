@@ -147,6 +147,7 @@ Hay 8 tests unitarios en 3 archivos, cubriendo:
 - **Búsqueda full-text con `pg_trgm` o `tsvector`.** El `contains` actual hace un `LIKE` con prefijo, que no escala bien ni soporta búsqueda en `category`. Postgres tiene herramientas mejores para esto.
 - **Soft delete.** En vez de `DELETE` físico, marcar `deletedAt` permitiría restaurar productos y mantener historial.
 - **Autenticación.** El panel está abierto. Agregaría NextAuth o middleware con sesión antes de exponerlo a internet.
-- **Optimistic updates.** En mutaciones para una UI más responsiva.
 - **Internacionalización.** Los mensajes están hardcodeados en español. Usar `next-intl` o similar facilitaría agregar otros idiomas.
+- **Histórico en PDF.** Generación de una impresión o informe en PDF, para mantener un historial o un formato diferente de presentación para los productos.
+- **Optimistic updates** en mutaciones para una UI más responsiva.
 - **Rate limiting y logs estructurados** en la API.
