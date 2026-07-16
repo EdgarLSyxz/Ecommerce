@@ -1,4 +1,4 @@
-import type { Prisma } from '../../../prisma/generated/client';
+import type { Prisma } from '../../../prisma/generated/prisma/client';
 import { productListQuerySchema, type ProductListQuery } from './schemas';
 
 export function parseProductListQuery(request: Request): ProductListQuery {
