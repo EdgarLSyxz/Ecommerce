@@ -1,0 +1,26 @@
+# Next.js & Dependencies
+.next/
+node_modules/
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# Database
+prisma/ecommerce.db
+prisma/ecommerce.db-journal
+prisma/ecommerce-test.db
+prisma/ecommerce-test.db-journal
+
+# Tests
+coverage
+
+# Utilities
+Commands.txt
+/src/generated/prisma
+
+# Others
+.vscode/
+.DS_Store
+/src/generated/prisma
