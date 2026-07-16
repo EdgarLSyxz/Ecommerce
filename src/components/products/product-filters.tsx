@@ -47,7 +47,7 @@ export function ProductFilters({
         className,
       )}
     >
-      <div className="relative flex-1">
+      <div className="relative w-full sm:max-w-xs sm:flex-1 sm:min-w-[180px]">
         <Search
           aria-hidden
           className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary"
@@ -57,14 +57,28 @@ export function ProductFilters({
           value={searchInput}
           onChange={(e) => onSearchInputChange(e.target.value)}
           placeholder="Buscar productos por nombre…"
-          className="pl-9 transition-all focus:ring-2 focus:ring-primary/20"
+          className={cn(
+            'pl-9 transition-all focus:ring-2 focus:ring-primary/20',
+            searchInput.length > 0 && 'pr-9',
+          )}
           aria-label="Buscar productos"
           autoComplete="off"
           spellCheck={false}
         />
+        {searchInput.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => onSearchInputChange('')}
+            aria-label="Limpiar búsqueda"
+            title="Limpiar búsqueda"
+            className="absolute right-2 top-1/2 inline-flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition-all hover:bg-muted hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <X className="size-3.5" />
+          </button>
+        ) : null}
       </div>
-      <div className="flex items-center gap-2 sm:max-w-md">
-        <span className="hidden items-center gap-1.5 text-xs font-medium text-muted-foreground sm:flex">
+      <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
+        <span className="hidden items-center gap-1.5 whitespace-nowrap text-xs font-medium text-muted-foreground sm:flex">
           <SlidersHorizontal className="size-3.5" />
           Filtros
           {activeFilterCount > 0 ? (
@@ -84,7 +98,7 @@ export function ProductFilters({
           }
           aria-label="Filtrar por estado"
           className={cn(
-            'min-w-[150px] flex-1 transition-all',
+            'min-w-[150px] flex-1 transition-all sm:flex-none sm:w-[170px]',
             query.status !== 'all' && 'ring-2 ring-primary/20',
           )}
         >
@@ -97,7 +111,7 @@ export function ProductFilters({
           onChange={(e) => onQueryChange({ ...query, category: e.target.value, page: 1 })}
           aria-label="Filtrar por categoría"
           className={cn(
-            'min-w-[170px] flex-1 transition-all',
+            'min-w-[170px] flex-1 transition-all sm:flex-none sm:w-[180px]',
             query.category !== 'all' && 'ring-2 ring-primary/20',
           )}
         >

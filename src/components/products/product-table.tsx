@@ -8,7 +8,7 @@ import {
   Layers,
   Hash,
   X,
-  ChevronRight,
+  Eye,
   CircleDot,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -142,7 +142,7 @@ function RowActions({
         aria-label={`Ver detalles de ${product.name}`}
         title="Ver detalles"
       >
-        <ChevronRight />
+        <Eye />
       </Button>
       <Button
         variant="ghost"
@@ -201,7 +201,12 @@ export function ProductTable({
         <div className="overflow-x-auto">
           <table className="w-full caption-bottom text-sm">
             <thead>
-              <tr className="border-b border-border bg-muted/30 text-left align-middle">
+              <tr
+                className={cn(
+                  'border-b border-border bg-muted/30 text-left align-middle transition-colors',
+                  hasActiveFilters && 'bg-primary-soft/35',
+                )}
+              >
                 <th className={cn(headerCellClass, 'w-[35%]')}>
                   <SortableHeader
                     label="Producto"
@@ -256,7 +261,7 @@ export function ProductTable({
                   />
                 </th>
                 <th className={cn(headerCellClass, 'w-[13%] text-right')}>
-                  <span className="px-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  <span className="inline-flex items-center rounded-md border border-transparent px-2 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground transition-all hover:border-border/70 hover:bg-muted/60 hover:text-foreground">
                     Acciones
                   </span>
                 </th>
