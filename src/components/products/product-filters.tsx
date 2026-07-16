@@ -84,7 +84,7 @@ export function ProductFilters({
           }
           aria-label="Filtrar por estado"
           className={cn(
-            'min-w-[150px] flex-1 transition-all sm:flex-none sm:w-[170px]',
+            'w-full flex-1 transition-all sm:flex-none sm:min-w-[150px] sm:w-[170px]',
             query.status !== 'all' && 'ring-2 ring-primary/20',
           )}
         >
@@ -97,7 +97,7 @@ export function ProductFilters({
           onChange={(e) => onQueryChange({ ...query, category: e.target.value, page: 1 })}
           aria-label="Filtrar por categoría"
           className={cn(
-            'min-w-[170px] flex-1 transition-all sm:flex-none sm:w-[180px]',
+            'w-full flex-1 transition-all sm:flex-none sm:min-w-[170px] sm:w-[180px]',
             query.category !== 'all' && 'ring-2 ring-primary/20',
           )}
         >
