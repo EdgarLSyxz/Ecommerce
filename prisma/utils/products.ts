@@ -1,0 +1,61 @@
+export const products = [
+  { name: 'Laptop Pro 14"', price: 33999.83, stock: 15, status: 'activo', category: 'Electrónica' },
+  {
+    name: 'Mouse Inalámbrico',
+    price: 509.83,
+    stock: 120,
+    status: 'activo',
+    category: 'Electrónica',
+  },
+  {
+    name: 'Teclado Mecánico',
+    price: 2541.5,
+    stock: 40,
+    status: 'activo',
+    category: 'Electrónica',
+  },
+  { name: 'Hub USB-C 7 en 1', price: 1003.0, stock: 75, status: 'activo', category: 'Electrónica' },
+  { name: 'Monitor 4K 27"', price: 7633.0, stock: 12, status: 'activo', category: 'Electrónica' },
+  { name: 'Camiseta Clásica', price: 339.83, stock: 200, status: 'activo', category: 'Ropa' },
+  { name: 'Chaqueta de Mezclilla', price: 1513.0, stock: 30, status: 'activo', category: 'Ropa' },
+  {
+    name: 'Zapatillas de Correr',
+    price: 2193.0,
+    stock: 0,
+    status: 'inactivo',
+    category: 'Deportes',
+  },
+  { name: 'Tapete de Yoga', price: 595.0, stock: null, status: 'activo', category: 'Deportes' },
+  {
+    name: 'Libro de Mesa: Arquitectura',
+    price: 849.83,
+    stock: 18,
+    status: 'activo',
+    category: 'Libros',
+  },
+  {
+    name: 'El Programador Pragmático',
+    price: 671.5,
+    stock: 25,
+    status: 'activo',
+    category: 'Libros',
+  },
+  { name: 'Jarrón de Cerámica', price: 408.0, stock: null, status: 'activo', category: 'Hogar' },
+  {
+    name: 'Altavoz Inteligente Descontinuado',
+    price: 0,
+    stock: 0,
+    status: 'inactivo',
+    category: 'Electrónica',
+  },
+  {
+    name: 'Set de Bloques de Construcción',
+    price: 544.0,
+    stock: 60,
+    status: 'activo',
+    category: 'Juguetes',
+  },
+  { name: 'Oso de Peluche', price: 314.5, stock: 100, status: 'activo', category: 'Juguetes' },
+];
+
+export default products;
