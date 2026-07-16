@@ -78,7 +78,7 @@ Esto ejecuta `prisma generate` automáticamente vía `postinstall`.
 
 ### 3. Variables de entorno
 
-Copiar `.env.example` a `.env` y completá la URL:
+Copiar `.env.example` a `.env` y completar la URL:
 
 ```bash
 cp .env.example .env
