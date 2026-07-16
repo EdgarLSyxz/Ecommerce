@@ -35,8 +35,8 @@ export function ProductPagination({ pagination, onPageChange, onPageSizeChange, 
           {' de '}
           <span className="font-semibold text-foreground">{total}</span>
         </p>
-        <div className="hidden h-4 w-px bg-border sm:block" />
-        <div className="hidden items-center gap-1.5 sm:flex">
+        <div className="hidden h-4 w-px bg-border xs:block" />
+        <div className="flex items-center gap-1.5">
           <span>Por página</span>
           <Select
             value={String(pageSize)}

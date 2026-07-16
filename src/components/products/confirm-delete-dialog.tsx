@@ -43,7 +43,7 @@ export function ConfirmDeleteDialog({ open, product, pending, onOpenChange, onCo
             <p className="font-medium text-foreground">{product.name}</p>
             <p className="mt-0.5 text-xs text-muted-foreground">
               {product.category ?? 'Sin categoría'} ·{' '}
-              {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'USD' }).format(
+              {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'MXN' }).format(
                 product.price,
               )}
             </p>

@@ -8,7 +8,7 @@ import {
   Layers,
   Hash,
   X,
-  ChevronRight,
+  Eye,
   CircleDot,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -80,12 +80,20 @@ function TableRowSkeleton() {
 function MobileCardSkeleton() {
   return (
     <Card className="p-4">
-      <div className="space-y-2">
-        <Skeleton className="h-5 w-3/4" />
-        <Skeleton className="h-4 w-1/2" />
-        <div className="flex justify-between">
-          <Skeleton className="h-6 w-20" />
-          <Skeleton className="h-8 w-8" />
+      <div className="flex items-start gap-3">
+        <Skeleton className="size-11 shrink-0 rounded-xl" />
+        <div className="min-w-0 flex-1 space-y-2">
+          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-3.5 w-1/3" />
+        </div>
+        <Skeleton className="h-6 w-16 shrink-0 rounded-full" />
+      </div>
+      <div className="mt-3 flex items-center justify-between gap-2">
+        <Skeleton className="h-5 w-24" />
+        <div className="flex gap-1">
+          <Skeleton className="size-8 rounded-md" />
+          <Skeleton className="size-8 rounded-md" />
+          <Skeleton className="size-8 rounded-md" />
         </div>
       </div>
     </Card>
@@ -142,7 +150,7 @@ function RowActions({
         aria-label={`Ver detalles de ${product.name}`}
         title="Ver detalles"
       >
-        <ChevronRight />
+        <Eye />
       </Button>
       <Button
         variant="ghost"
@@ -201,7 +209,12 @@ export function ProductTable({
         <div className="overflow-x-auto">
           <table className="w-full caption-bottom text-sm">
             <thead>
-              <tr className="border-b border-border bg-muted/30 text-left align-middle">
+              <tr
+                className={cn(
+                  'border-b border-border bg-muted/30 text-left align-middle transition-colors',
+                  hasActiveFilters && 'bg-primary-soft/35',
+                )}
+              >
                 <th className={cn(headerCellClass, 'w-[35%]')}>
                   <SortableHeader
                     label="Producto"
@@ -221,6 +234,7 @@ export function ProductTable({
                     onCycle={onCategoryCycle}
                     onClear={onCategoryClear}
                     showLabelInHeader
+                    showChevronWhenInactive
                   />
                 </th>
                 <th className={cn(headerCellClass, 'w-[12%]')}>
@@ -251,10 +265,11 @@ export function ProductTable({
                     onCycle={onStatusCycle}
                     onClear={onStatusClear}
                     showLabelInHeader
+                    showChevronWhenInactive
                   />
                 </th>
                 <th className={cn(headerCellClass, 'w-[13%] text-right')}>
-                  <span className="px-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  <span className="inline-flex items-center rounded-md border border-transparent px-2 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground transition-all hover:border-border/70 hover:bg-muted/60 hover:text-foreground">
                     Acciones
                   </span>
                 </th>
@@ -406,7 +421,7 @@ export function ProductTable({
 
       <div className="space-y-3 md:hidden">
         {loading ? (
-          Array.from({ length: 3 }).map((_, i) => <MobileCardSkeleton key={i} />)
+          Array.from({ length: 5 }).map((_, i) => <MobileCardSkeleton key={i} />)
         ) : products.length === 0 ? (
           hasAnyProduct && hasActiveFilters ? (
             <NoResultsBanner onClearFilters={onClearFilters} />
@@ -491,13 +506,24 @@ export function ProductTable({
                 </button>
               </div>
               <div className="mt-3 flex items-center justify-between border-t border-border pt-3 text-xs text-muted-foreground">
-                <span className="tabular-nums">
-                  Stock:{' '}
+                <span
+                  className={cn(
+                    'tabular-nums text-xs font-medium',
+                    product.stock === null
+                      ? 'text-muted-foreground'
+                      : product.stock === 0
+                        ? 'text-destructive font-semibold'
+                        : product.stock <= 5
+                          ? 'text-warning font-semibold'
+                          : 'text-muted-foreground',
+                  )}
+                >
+                  <Hash className="mr-0.5 inline size-3" />
                   {product.stock === null
-                    ? 'Sin control'
+                    ? 'Sin control de stock'
                     : product.stock === 0
                       ? 'Agotado'
-                      : `${product.stock} uds.`}
+                      : `${product.stock} uds. en stock`}
                 </span>
                 <RowActions
                   product={product}

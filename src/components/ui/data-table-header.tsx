@@ -48,8 +48,8 @@ export function SortableHeader({
           'group inline-flex cursor-pointer select-none items-center gap-1.5 rounded-md px-2 py-1 text-[11px] font-semibold uppercase tracking-wider transition-all',
           'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
           'focus-visible:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card',
-          isActive && 'bg-primary-soft/60 text-primary hover:bg-primary-soft',
-          align === 'right' && 'flex-row-reverse',
+          isActive && 'bg-primary-soft/55 text-foreground hover:bg-primary/15',
+          align === 'right' && 'ml-auto',
           align === 'center' && 'justify-center',
         )}
       >
@@ -57,9 +57,9 @@ export function SortableHeader({
         <span
           aria-hidden
           className={cn(
-            'inline-flex items-center gap-1 rounded transition-all px-1 py-0.5',
+            'inline-flex items-center gap-1 rounded-full transition-all px-2 py-0.5',
             isActive
-              ? 'bg-primary/10 text-primary'
+              ? 'bg-primary/15 text-primary'
               : 'text-muted-foreground/50 opacity-60 group-hover:opacity-100 group-hover:text-foreground',
           )}
         >
@@ -79,6 +79,7 @@ type CycleFilterHeaderProps<TValue extends string> = {
   align?: 'left' | 'right' | 'center';
   className?: string;
   showLabelInHeader?: boolean;
+  showChevronWhenInactive?: boolean;
 };
 
 export function CycleFilterHeader<TValue extends string>({
@@ -90,6 +91,7 @@ export function CycleFilterHeader<TValue extends string>({
   align = 'left',
   className,
   showLabelInHeader = false,
+  showChevronWhenInactive = false,
 }: CycleFilterHeaderProps<TValue>) {
   const active = current !== cycle[0].value;
   const currentLabel = cycle.find((c) => c.value === current)?.label ?? label;
@@ -105,8 +107,8 @@ export function CycleFilterHeader<TValue extends string>({
         'group inline-flex cursor-pointer select-none items-center gap-1.5 rounded-md px-2 py-1 text-[11px] font-semibold uppercase tracking-wider transition-all',
         'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
         'focus-within:bg-muted/60 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-card',
-        active && 'text-primary',
-        align === 'right' && 'flex-row-reverse',
+        active && 'bg-primary-soft/55 text-foreground hover:bg-primary/15',
+        align === 'right' && 'ml-auto',
         align === 'center' && 'justify-center',
         className,
       )}
@@ -123,13 +125,24 @@ export function CycleFilterHeader<TValue extends string>({
         className="inline-flex cursor-pointer items-center gap-1.5 focus:outline-none"
       >
         <span>{headerText.toUpperCase()}</span>
+        {!active && showLabelInHeader && showChevronWhenInactive ? (
+          <span
+            aria-hidden
+            className={cn(
+              'inline-flex items-center gap-1 rounded px-1 py-0.5 transition-all',
+              'text-muted-foreground/50 opacity-60 group-hover:opacity-100 group-hover:text-foreground',
+            )}
+          >
+            <ChevronsUpDown className="size-3" />
+          </span>
+        ) : null}
         {!showLabelInHeader ? (
           <span
             aria-hidden
             className={cn(
               'inline-flex items-center gap-1 rounded transition-all px-1.5 py-0.5',
               active
-                ? 'text-primary'
+                ? 'bg-primary/15 text-primary'
                 : 'text-muted-foreground/50 opacity-60 group-hover:opacity-100 group-hover:text-foreground',
             )}
           >
