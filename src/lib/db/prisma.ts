@@ -3,12 +3,23 @@ import { PrismaPg } from '@prisma/adapter-pg';
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
-function createPrismaClient() {
-  const connectionString = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
-  if (!connectionString) {
-    throw new Error('DATABASE_URL (or POSTGRES_URL) is not set');
+function getConnectionString(): string {
+  const url =
+    process.env.DATABASE_POSTGRES_PRISMA_URL ??
+    process.env.DATABASE_POSTGRES_URL ??
+    process.env.DATABASE_URL ??
+    process.env.POSTGRES_PRISMA_URL ??
+    process.env.POSTGRES_URL;
+  if (!url) {
+    throw new Error(
+      'Database connection string not found. Set DATABASE_URL, POSTGRES_URL, or one of the DATABASE_POSTGRES_* variants.',
+    );
   }
-  const adapter = new PrismaPg(connectionString);
+  return url;
+}
+
+function createPrismaClient() {
+  const adapter = new PrismaPg(getConnectionString());
   return new PrismaClient({ adapter });
 }
 

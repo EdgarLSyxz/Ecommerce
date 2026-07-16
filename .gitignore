@@ -26,3 +26,5 @@ Commands.txt
 /src/generated/prisma
 
 /generated/prisma
+.vercel
+.env*

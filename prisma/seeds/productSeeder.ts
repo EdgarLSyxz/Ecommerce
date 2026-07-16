@@ -1,11 +1,22 @@
 import 'dotenv/config';
+import { config as loadEnv } from 'dotenv';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../generated/prisma/client';
 import products from '../utils/products';
 
-const connectionString = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
+loadEnv({ path: '.env.local' });
+
+const connectionString =
+  process.env.DATABASE_POSTGRES_PRISMA_URL ??
+  process.env.DATABASE_POSTGRES_URL ??
+  process.env.DATABASE_URL ??
+  process.env.POSTGRES_PRISMA_URL ??
+  process.env.POSTGRES_URL;
+
 if (!connectionString) {
-  throw new Error('DATABASE_URL (or POSTGRES_URL) is not set');
+  throw new Error(
+    'Database connection string not found. Set DATABASE_URL, POSTGRES_URL, or one of the DATABASE_POSTGRES_* variants.',
+  );
 }
 
 const adapter = new PrismaPg(connectionString);
