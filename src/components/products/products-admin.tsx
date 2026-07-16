@@ -59,8 +59,7 @@ function toggleSort(
   currentSortDir: SortDirection,
 ): { sortBy: ProductSortBy; sortDir: SortDirection } {
   if (currentSortBy !== column) {
-    const initialDir: SortDirection =
-      column === 'price' || column === 'stock' ? 'desc' : 'asc';
+    const initialDir: SortDirection = 'asc';
     return { sortBy: column, sortDir: initialDir };
   }
   if (currentSortDir === 'asc') return { sortBy: column, sortDir: 'desc' };
@@ -287,7 +286,7 @@ export function ProductsAdmin() {
     : undefined;
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-7 px-4 py-8 sm:px-6 lg:px-8">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-6 sm:gap-7 sm:px-6 sm:py-8 lg:px-8">
       <PageHeader
         eyebrow="Panel de administración"
         title="Catálogo de productos"

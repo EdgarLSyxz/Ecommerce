@@ -26,11 +26,11 @@ export function PageHeader({
   return (
     <div
       className={cn(
-        'flex flex-col gap-5 border-b border-border pb-8 lg:flex-row lg:items-end lg:justify-between',
+        'flex flex-col gap-5 border-b border-border pb-6 sm:pb-8 lg:flex-row lg:items-end lg:justify-between',
         className,
       )}
     >
-      <div className="flex items-start gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         {icon ? (
           <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-soft via-primary/10 to-primary/5 text-primary ring-1 ring-primary/20 shadow-sm transition-transform hover:scale-105">
             {icon}
@@ -53,7 +53,7 @@ export function PageHeader({
         </div>
       </div>
       {actions ? (
-        <div className="flex flex-wrap items-center gap-2.5 lg:flex-shrink-0">{actions}</div>
+        <div className="flex flex-wrap items-center gap-2 sm:flex-shrink-0 sm:justify-end">{actions}</div>
       ) : null}
     </div>
   );

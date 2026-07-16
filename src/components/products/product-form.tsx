@@ -125,7 +125,7 @@ export function ProductForm({
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field
-          label="Precio (USD)"
+          label="Precio"
           htmlFor="product-price"
           required
           error={errors.price}
