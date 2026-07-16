@@ -1,6 +1,6 @@
-# Mini E-commerce — Panel de administración de productos
+# Ecommerce — Panel de administración de productos
 
-Aplicación web fullstack para gestionar el catálogo de productos de una tienda. Consume una API REST real (utilizada también por una app móvil en Expo/React Native) y persiste los datos en PostgreSQL.
+Aplicación web fullstack para gestionar el catálogo de productos de una tienda.
 
 **Deploy:** https://ecommerce-syxz.vercel.app/
 
@@ -15,7 +15,7 @@ Aplicación web fullstack para gestionar el catálogo de productos de una tienda
 
 ## Funcionalidades
 
-- CRUD completo: listar, crear, editar y eliminar productos.
+- CRUD Completo: listar, crear, editar y eliminar productos.
 - Filtros combinables por estado y categoría, más búsqueda por nombre con debounce de 300 ms.
 - Paginación tradicional con selector de tamaño de página.
 - Métricas agregadas: total de productos activos y valor total del inventario (asumiendo `stock: null` como 0, mismo supuesto documentado en el código).
@@ -26,12 +26,12 @@ Aplicación web fullstack para gestionar el catálogo de productos de una tienda
 
 ## API
 
-| Método | Ruta                  | Descripción              | Códigos                |
-| ------ | --------------------- | ------------------------ | ---------------------- |
-| GET    | `/api/products`       | Lista con filtros y pag. | 200, 422               |
-| POST   | `/api/products`       | Crea un producto         | 201, 422               |
-| PATCH  | `/api/products/:id`   | Actualización parcial    | 200, 400, 404, 422     |
-| DELETE | `/api/products/:id`   | Elimina un producto      | 204, 400, 404          |
+| Método | Ruta                | Descripción              | Códigos            |
+| ------ | ------------------- | ------------------------ | ------------------ |
+| GET    | `/api/products`     | Lista con filtros y pag. | 200, 422           |
+| POST   | `/api/products`     | Crea un producto         | 201, 422           |
+| PATCH  | `/api/products/:id` | Actualización parcial    | 200, 400, 404, 422 |
+| DELETE | `/api/products/:id` | Elimina un producto      | 204, 400, 404      |
 
 Los errores devuelven un cuerpo consistente:
 
@@ -78,7 +78,7 @@ Esto ejecuta `prisma generate` automáticamente vía `postinstall`.
 
 ### 3. Variables de entorno
 
-Copiá `.env.example` a `.env` y completá la URL:
+Copiar `.env.example` a `.env` y completá la URL:
 
 ```bash
 cp .env.example .env
@@ -87,8 +87,6 @@ cp .env.example .env
 ```env
 DATABASE_URL="postgresql://user:password@host:5432/database?sslmode=require"
 ```
-
-El cliente lee, en orden de prioridad: `DATABASE_POSTGRES_PRISMA_URL`, `DATABASE_URL_UNPOOLED`, `DATABASE_POSTGRES_URL_NON_POOLING`, `DATABASE_URL`, `POSTGRES_PRISMA_URL`, `POSTGRES_URL`. Esto permite usar tanto variables de Vercel/Neon (`DATABASE_*`) como variables tradicionales (`POSTGRES_URL`).
 
 ### 4. Migrar y seedear
 
@@ -103,7 +101,7 @@ npx tsx prisma/seeds/productSeeder.ts
 npm run dev
 ```
 
-Abrí [http://localhost:3000](http://localhost:3000).
+Abrir [http://localhost:3000](http://localhost:3000).
 
 ## Tests
 
@@ -149,53 +147,6 @@ Hay 8 tests unitarios en 3 archivos, cubriendo:
 - **Búsqueda full-text con `pg_trgm` o `tsvector`.** El `contains` actual hace un `LIKE` con prefijo, que no escala bien ni soporta búsqueda en `category`. Postgres tiene herramientas mejores para esto.
 - **Soft delete.** En vez de `DELETE` físico, marcar `deletedAt` permitiría restaurar productos y mantener historial.
 - **Autenticación.** El panel está abierto. Agregaría NextAuth o middleware con sesión antes de exponerlo a internet.
-- **Optimistic updates** en mutaciones para una UI más responsiva.
+- **Optimistic updates.** En mutaciones para una UI más responsiva.
 - **Internacionalización.** Los mensajes están hardcodeados en español. Usar `next-intl` o similar facilitaría agregar otros idiomas.
 - **Rate limiting y logs estructurados** en la API.
-
-## Preguntas — Expo / React Native
-
-**¿Has trabajado con Expo o React Native?**
-
-Sí, he trabajado con Expo y React Native en proyectos donde el cliente móvil consumía la misma API que una app web. Lo más común fue usar Expo SDK con `expo-router` para navegación file-based (similar a Next.js), `expo-secure-store` para tokens, y `expo-image` para listas largas. He manejado el ciclo de vida de la app con `AppState` y he usado `expo-notifications` para push.
-
-**¿Qué diferencias técnicas relevantes hay entre desarrollo web y mobile?**
-
-- **Navegación.** En web la "navegación" suele ser cambio de URL + scroll; en mobile son stacks/pestañas con transiciones nativas, historial real, y gestos. `expo-router` replica la metáfora file-based pero el modelo mental de "pila de pantallas" es diferente.
-- **Storage.** Web usa `localStorage`/`IndexedDB` (síncrono limitado, sensible a cuota). Mobile usa `AsyncStorage`, `SecureStore` (para secretos), o SQLite nativo. El storage es persistente de verdad en mobile, no como en web donde el usuario puede limpiarlo.
-- **Ciclo de vida.** En web la pestaña puede ocultarse pero el JS sigue corriendo; en mobile la app pasa a background y el JS se suspende. Hay que guardar estado, pausar timers, y rehidratar al volver.
-- **Networking.** En mobile la red es más variable (3G, modo avión, pérdida短暂). Hay que reintentar con backoff, manejar offline-first, y ser más agresivo con caché. En web se asume conexión razonable más a menudo.
-- **Bundling y plataforma.** Expo usa Metro (parecido a Webpack pero con su propio resolver), y hay que cuidar native modules y el `app.json`/`eas.json`.
-
-**¿Cómo compartirías lógica de negocio y llamadas a la API entre web y mobile?**
-
-Monorepo con un paquete compartido (ej. `@acme/api-client`) que exponga:
-
-- **Tipos generados** desde los schemas de Zod (`z.infer`), o mejor, desde el schema de Prisma con `prisma generate` + un transformador.
-- **Cliente HTTP** con la misma forma que el del frontend web (`fetchProducts`, `createProduct`, etc.) implementado sobre `fetch` (universal).
-- **Schemas de validación** de Zod — funcionan igual en ambos lados porque Zod no depende del entorno.
-- **Hooks/lógica de UI** específica se queda en cada plataforma, pero las reglas puras (calcular métricas, normalizar payloads) viven en el paquete compartido.
-
-Si el proyecto es chico, con un paquete npm interno publicado a un registry privado (o `workspace:*` en pnpm) alcanza. Para algo más grande, Turborepo o Nx para cache y CI.
-
-**Si tuvieras que diseñar el cliente de esta misma API para Expo, ¿qué cambiarías o mantendría igual?**
-
-**Mantendría igual:**
-- La forma del cliente HTTP (mismas funciones, mismos tipos).
-- Los schemas de Zod para validar respuestas antes de tipar.
-- La estructura del DTO de producto.
-- Los códigos de error (mapeo `code → mensaje`).
-
-**Cambiaría:**
-- Reemplazaría `fetch` del navegador por una capa que use `fetch` de Expo (que ya polyfilea lo necesario) pero con `AbortController` para cancelar requests al desmontar.
-- Agregaría un wrapper con reintentos exponenciales y un circuit breaker básico.
-- Usaría `expo-secure-store` para tokens de auth en vez de cookies.
-- Cachearía respuestas con `react-query` o `SWR` con `persistor` que escriba a `AsyncStorage`, para soportar offline.
-- Normalizaría timestamps a `Date` con una capa de hidratación, porque JSON no preserva tipos.
-- Manejaría el deep linking: si la app abre con un `productos/123`, debería fetchear y mostrar ese producto, algo que en web ya da el routing.
-- En formularios, el debounce de la búsqueda es igual, pero en el form de creación usaría `KeyboardAvoidingView` y un `ScrollView` con `keyboardShouldPersistTaps`.
-- Consideraría expo-image en vez de `<img>` nativo para listas largas.
-
-## Licencia
-
-Código entregado como prueba técnica.
