@@ -261,4 +261,7 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  input[type='search']::-webkit-search-cancel-button {
+    cursor: pointer;
+  }
 }

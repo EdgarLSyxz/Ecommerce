@@ -57,25 +57,11 @@ export function ProductFilters({
           value={searchInput}
           onChange={(e) => onSearchInputChange(e.target.value)}
           placeholder="Buscar productos por nombre…"
-          className={cn(
-            'pl-9 transition-all focus:ring-2 focus:ring-primary/20',
-            searchInput.length > 0 && 'pr-9',
-          )}
+          className="pl-9 transition-all focus:ring-2 focus:ring-primary/20"
           aria-label="Buscar productos"
           autoComplete="off"
           spellCheck={false}
         />
-        {searchInput.length > 0 ? (
-          <button
-            type="button"
-            onClick={() => onSearchInputChange('')}
-            aria-label="Limpiar búsqueda"
-            title="Limpiar búsqueda"
-            className="absolute right-2 top-1/2 inline-flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition-all hover:bg-muted hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <X className="size-3.5" />
-          </button>
-        ) : null}
       </div>
       <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
         <span className="hidden items-center gap-1.5 whitespace-nowrap text-xs font-medium text-muted-foreground sm:flex">
