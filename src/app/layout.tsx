@@ -34,8 +34,8 @@ export const metadata: Metadata = {
     "Next.js",
     "TypeScript",
   ],
-  authors: [{ name: "Edgar León" }],
-  creator: "Edgar León",
+  authors: [{ name: "Edgar Leonel AC" }],
+  creator: "Edgar Leonel AC",
   openGraph: {
     type: "website",
     locale: "es_ES",
