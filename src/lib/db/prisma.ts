@@ -1,11 +1,14 @@
 import { PrismaClient } from '../../../prisma/generated/prisma/client';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { PrismaPg } from '@prisma/adapter-pg';
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
 function createPrismaClient() {
-  const dbUrl = (process.env.DATABASE_URL ?? 'file:./prisma/ecommerce.db').replace(/^file:/, '');
-  const adapter = new PrismaBetterSqlite3({ url: `file:${dbUrl}` });
+  const connectionString = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
+  if (!connectionString) {
+    throw new Error('DATABASE_URL (or POSTGRES_URL) is not set');
+  }
+  const adapter = new PrismaPg(connectionString);
   return new PrismaClient({ adapter });
 }
 

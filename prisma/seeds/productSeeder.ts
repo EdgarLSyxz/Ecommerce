@@ -1,13 +1,16 @@
 import 'dotenv/config';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../generated/prisma/client';
 import products from '../utils/products';
 
-const adapter = new PrismaBetterSqlite3({
-  url: process.env.DATABASE_URL as string,
-});
+const connectionString = process.env.DATABASE_URL ?? process.env.POSTGRES_URL;
+if (!connectionString) {
+  throw new Error('DATABASE_URL (or POSTGRES_URL) is not set');
+}
 
+const adapter = new PrismaPg(connectionString);
 const prisma = new PrismaClient({ adapter });
+
 async function main() {
   await prisma.product.deleteMany();
   await prisma.product.createMany({ data: products });
