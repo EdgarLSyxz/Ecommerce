@@ -79,6 +79,7 @@ type CycleFilterHeaderProps<TValue extends string> = {
   align?: 'left' | 'right' | 'center';
   className?: string;
   showLabelInHeader?: boolean;
+  showChevronWhenInactive?: boolean;
 };
 
 export function CycleFilterHeader<TValue extends string>({
@@ -90,6 +91,7 @@ export function CycleFilterHeader<TValue extends string>({
   align = 'left',
   className,
   showLabelInHeader = false,
+  showChevronWhenInactive = false,
 }: CycleFilterHeaderProps<TValue>) {
   const active = current !== cycle[0].value;
   const currentLabel = cycle.find((c) => c.value === current)?.label ?? label;
@@ -123,6 +125,17 @@ export function CycleFilterHeader<TValue extends string>({
         className="inline-flex cursor-pointer items-center gap-1.5 focus:outline-none"
       >
         <span>{headerText.toUpperCase()}</span>
+        {!active && showLabelInHeader && showChevronWhenInactive ? (
+          <span
+            aria-hidden
+            className={cn(
+              'inline-flex items-center gap-1 rounded px-1 py-0.5 transition-all',
+              'text-muted-foreground/50 opacity-60 group-hover:opacity-100 group-hover:text-foreground',
+            )}
+          >
+            <ChevronsUpDown className="size-3" />
+          </span>
+        ) : null}
         {!showLabelInHeader ? (
           <span
             aria-hidden

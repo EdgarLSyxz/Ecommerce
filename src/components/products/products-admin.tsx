@@ -59,8 +59,7 @@ function toggleSort(
   currentSortDir: SortDirection,
 ): { sortBy: ProductSortBy; sortDir: SortDirection } {
   if (currentSortBy !== column) {
-    const initialDir: SortDirection =
-      column === 'price' || column === 'stock' ? 'desc' : 'asc';
+    const initialDir: SortDirection = 'asc';
     return { sortBy: column, sortDir: initialDir };
   }
   if (currentSortDir === 'asc') return { sortBy: column, sortDir: 'desc' };

@@ -221,6 +221,7 @@ export function ProductTable({
                     onCycle={onCategoryCycle}
                     onClear={onCategoryClear}
                     showLabelInHeader
+                    showChevronWhenInactive
                   />
                 </th>
                 <th className={cn(headerCellClass, 'w-[12%]')}>
@@ -251,6 +252,7 @@ export function ProductTable({
                     onCycle={onStatusCycle}
                     onClear={onStatusClear}
                     showLabelInHeader
+                    showChevronWhenInactive
                   />
                 </th>
                 <th className={cn(headerCellClass, 'w-[13%] text-right')}>
