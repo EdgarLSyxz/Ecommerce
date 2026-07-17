@@ -66,7 +66,7 @@ prisma/
 
 - Node.js 20 o superior
 - npm
-- Una base de datos PostgreSQL (local o remota). Para Neon/Vercel Postgres solo necesitás la URL de conexión.
+- Una base de datos PostgreSQL (local o remota). Para Neon/Vercel Postgres solo se necesita la URL de conexión.
 
 ### 2. Instalación
 
