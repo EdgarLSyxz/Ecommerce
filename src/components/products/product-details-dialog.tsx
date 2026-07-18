@@ -134,7 +134,7 @@ export function ProductDetailsDialog({
             <div className="min-w-0 flex-1 space-y-1.5">
               <DialogTitle className="leading-tight">{product.name}</DialogTitle>
               <DialogDescription>
-                Detalle completo del producto. Desde aquí puedes editarlo o eliminarlo.
+                Detalle completo del producto.
               </DialogDescription>
               <div className="flex flex-wrap items-center gap-1.5 pt-1.5">
                 <span
